@@ -273,9 +273,11 @@ DASHBOARD = """
       --border-light: #e9ecf0;
       --accent: #0066ff;
       --accent-soft: #e0ebff;
-      --success: #00b87a;
-      --warning: #f59e0b;
-      --danger: #ef4444;
+      --success: #00875a;
+      --success-soft: #e3f7ef;
+      --warning: #b45309;
+      --warning-soft: #fdf0d5;
+      --danger: #d92d20;
       --shadow-md: 0 8px 20px rgba(0,0,0,0.06);
     }
 
@@ -284,34 +286,40 @@ DASHBOARD = """
       --card-bg: #141a24;
       --text-primary: #eef2f6;
       --text-secondary: #9aabbf;
-      --text-muted: #6a7b8c;
+      --text-muted: #7d8ea0;
       --border-light: #242c38;
       --accent: #3399ff;
-      --accent-soft: #1a2a3a;
+      --accent-soft: #17263a;
       --success: #00cc88;
+      --success-soft: #0f2a22;
+      --warning: #f0b429;
+      --warning-soft: #2e2413;
+      --danger: #ff6b6b;
     }
 
     body {
       background: var(--bg-page);
       color: var(--text-primary);
-      padding: 20px 24px;
-      transition: background 0.2s;
+      padding: 20px 24px 48px;
+      line-height: 1.5;
     }
 
-    .dashboard { max-width: 1200px; margin: 0 auto; }
+    .dashboard { max-width: 1120px; margin: 0 auto; }
 
-    /* Top Nav */
+    /* ── Header ── */
     .top-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
       gap: 16px;
     }
 
+    .brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+
     .project-name {
-      font-size: 2rem;
+      font-size: 1.9rem;
       font-weight: 700;
       background: linear-gradient(135deg, #0066ff, #00c2ff);
       -webkit-background-clip: text;
@@ -319,11 +327,9 @@ DASHBOARD = """
       color: transparent;
     }
 
-    .nav-controls {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .project-tagline { color: var(--text-muted); font-size: 0.9rem; }
+
+    .nav-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
     .theme-toggle {
       display: flex;
@@ -344,10 +350,7 @@ DASHBOARD = """
       color: var(--text-secondary);
     }
 
-    .theme-btn.active {
-      background: var(--accent);
-      color: white;
-    }
+    .theme-btn.active { background: var(--accent); color: #fff; }
 
     .status-badge {
       display: flex;
@@ -356,219 +359,224 @@ DASHBOARD = """
       background: var(--accent-soft);
       padding: 8px 18px;
       border-radius: 40px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
     }
 
     .pulse-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
+      width: 10px; height: 10px; border-radius: 50%;
       background: var(--success);
       animation: pulse 1.8s infinite;
     }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-
-    /* Comparison Grid */
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 24px 0 16px;
+    /* ── Summary banner ── */
+    .summary {
+      background: var(--card-bg);
+      border: 1px solid var(--border-light);
+      border-left: 6px solid var(--success);
+      border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 32px;
     }
+    .summary.has-action { border-left-color: var(--warning); }
 
+    .summary-headline { font-size: 1.35rem; font-weight: 700; margin-bottom: 6px; }
+    .summary-sub { color: var(--text-secondary); font-size: 0.95rem; }
+
+    .summary-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-light);
+    }
+    .fact-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .fact-value { font-size: 1rem; font-weight: 600; margin-top: 2px; }
+
+    /* ── Sections ── */
+    .section { margin-bottom: 32px; }
+    .section-title { font-size: 1.05rem; font-weight: 600; margin: 0 0 4px; }
+    .section-help { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px; }
+
+    /* ── Device cards ── */
     .comparison-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 18px;
     }
 
     .comparison-card {
       background: var(--card-bg);
-      border-radius: 24px;
-      padding: 20px 16px;
+      border-radius: 20px;
+      padding: 20px 18px;
       box-shadow: var(--shadow-md);
-      border: 2px solid var(--border-light);
-      text-align: center;
+      border: 1px solid var(--border-light);
+      border-top: 4px solid var(--success);
     }
+    .comparison-card.mismatch { border-top-color: var(--warning); }
 
-    .comparison-card.match {
-      border-color: var(--success);
-      background: linear-gradient(145deg, var(--card-bg), var(--accent-soft));
-    }
-
-    .comparison-card.mismatch {
-      border-color: var(--warning);
-    }
-
-    .device-name {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-    }
+    .device-name { font-weight: 600; font-size: 1.05rem; }
+    .device-sub { color: var(--text-muted); font-size: 0.78rem; margin-bottom: 16px; }
 
     .state-row {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
+      align-items: center;
+      padding: 9px 0;
       border-bottom: 1px solid var(--border-light);
     }
+    .state-row .label { color: var(--text-secondary); font-size: 0.85rem; }
 
-    .state-row .label {
-      color: var(--text-muted);
-      font-size: 0.85rem;
+    .pill {
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      padding: 3px 12px;
+      border-radius: 40px;
+      border: 1px solid var(--border-light);
     }
+    .pill.on  { background: var(--success-soft); color: var(--success); border-color: var(--success); }
+    .pill.off { background: transparent; color: var(--text-muted); }
 
-    .state-row .value {
+    .verdict {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 0.86rem;
       font-weight: 600;
+      background: var(--success-soft);
+      color: var(--success);
     }
+    .mismatch .verdict { background: var(--warning-soft); color: var(--warning); }
 
-    .value.on { color: var(--success); }
-    .value.off { color: var(--text-muted); }
+    .confidence { margin-top: 10px; font-size: 0.78rem; color: var(--text-muted); }
 
-    .match-status {
-      margin-top: 12px;
-      padding: 6px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .match .match-status {
-      background: var(--success);
-      color: white;
-    }
-
-    .mismatch .match-status {
-      background: var(--warning);
-      color: white;
-    }
-
-    .action-needed {
-      margin-top: 8px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-style: italic;
-    }
-
-    .confidence {
-      margin-top: 8px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    /* Cards */
-    .automation-card {
+    /* ── Panels ── */
+    .panel {
       background: var(--card-bg);
-      border-radius: 24px;
-      padding: 24px;
-      margin: 28px 0;
+      border-radius: 20px;
+      padding: 22px 24px;
       border: 1px solid var(--border-light);
       box-shadow: var(--shadow-md);
+    }
+
+    .panel-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 16px;
     }
 
     .btn {
       background: var(--accent);
-      color: white;
+      color: #fff;
       border: none;
-      padding: 12px 24px;
+      padding: 11px 22px;
       border-radius: 40px;
       font-weight: 600;
+      font-size: 0.9rem;
       cursor: pointer;
     }
+    .btn:disabled { opacity: 0.6; cursor: default; }
 
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--border-light);
-      color: var(--text-primary);
-    }
-
-    /* Manual Section */
-    .manual-section {
-      background: var(--card-bg);
-      border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 28px;
-      border: 1px solid var(--border-light);
-    }
-
+    /* ── Manual check ── */
     .manual-form {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       align-items: flex-end;
       flex-wrap: wrap;
       margin-top: 16px;
     }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .input-group label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .input-group label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
     .input-group input, .input-group select {
       background: var(--bg-page);
       border: 1px solid var(--border-light);
-      border-radius: 16px;
-      padding: 12px 16px;
+      border-radius: 14px;
+      padding: 11px 14px;
       color: var(--text-primary);
-      font-size: 1rem;
-      width: 120px;
+      font-size: 0.95rem;
+      width: 130px;
     }
 
-    .prediction-preview {
-      margin-top: 24px;
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
+    .prediction-preview { margin-top: 20px; }
+    .preview-caption { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 12px; }
+    .preview-grid { display: flex; gap: 14px; flex-wrap: wrap; }
     .preview-item {
       background: var(--bg-page);
-      padding: 16px 24px;
-      border-radius: 20px;
-    }
-
-    /* Log Feed */
-    .log-feed {
-      background: var(--card-bg);
-      border-radius: 24px;
-      padding: 20px;
       border: 1px solid var(--border-light);
+      padding: 14px 20px;
+      border-radius: 16px;
+      min-width: 120px;
     }
+    .preview-item .name { font-size: 0.8rem; color: var(--text-muted); }
+    .preview-item .state { font-size: 1.3rem; font-weight: 700; margin: 4px 0; }
+    .preview-item .state.on { color: var(--success); }
+    .preview-item .state.off { color: var(--text-muted); }
+    .preview-item small { color: var(--text-muted); font-size: 0.75rem; }
 
-    .log-item {
-      display: flex;
-      align-items: center;
-      padding: 12px 0;
+    /* ── History table ── */
+    table.log { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    table.log th {
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 0 12px 10px 0;
       border-bottom: 1px solid var(--border-light);
     }
-
-    .log-time { min-width: 140px; color: var(--text-muted); font-size: 0.85rem; }
-
-    @media (max-width: 800px) {
-      .comparison-grid { grid-template-columns: repeat(2, 1fr); }
+    table.log td {
+      padding: 12px 12px 12px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.9rem;
+      vertical-align: middle;
     }
+    table.log td.time { color: var(--text-secondary); white-space: nowrap; }
 
-    @media (max-width: 500px) {
+    .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 40px;
+      white-space: nowrap;
+    }
+    .tag.ok   { background: var(--success-soft); color: var(--success); }
+    .tag.warn { background: var(--warning-soft); color: var(--warning); }
+
+    .empty { padding: 32px; text-align: center; color: var(--text-muted); }
+
+    @media (max-width: 900px) {
+      .comparison-grid { grid-template-columns: repeat(2, 1fr); }
+      table.log .hide-sm { display: none; }
+    }
+    @media (max-width: 520px) {
       .comparison-grid { grid-template-columns: 1fr; }
+      body { padding: 16px 14px 40px; }
     }
   </style>
 </head>
 <body>
 <div class="dashboard">
-  <!-- Top Nav -->
+
+  <!-- Header -->
   <div class="top-nav">
-    <div class="project-name">OLAS</div>
+    <div class="brand">
+      <span class="project-name">OLAS</span>
+      <span class="project-tagline">Optimised Lab Automation System</span>
+    </div>
     <div class="nav-controls">
       <div class="theme-toggle">
         <button class="theme-btn active" data-theme="light" onclick="setTheme('light')">☀️ Light</button>
@@ -576,43 +584,74 @@ DASHBOARD = """
       </div>
       <div class="status-badge">
         <span class="pulse-dot"></span>
-        <span class="status-text">Live · RainMaker</span>
+        <span>Live from RainMaker</span>
       </div>
     </div>
   </div>
 
-  <!-- COMPARISON GRID: Actual vs Predicted -->
-  <div class="section-title">📊 Actual vs Predicted Comparison</div>
-  <div class="comparison-grid" id="comparisonGrid">
-    <!-- Populated by JS -->
-  </div>
-
-  <!-- Action Card -->
-  <div class="automation-card">
-    <div>
-      <h3>🤖 ML Intelligence</h3>
-      <p style="color: var(--text-muted);">Predictions compared with live states · Automation documented as future scope</p>
+  <!-- Plain-English summary -->
+  <div class="summary" id="summaryCard">
+    <div class="summary-headline" id="summaryHeadline">Waiting for the first reading…</div>
+    <div class="summary-sub" id="summarySub">The scheduler checks the lab every 30 minutes.</div>
+    <div class="summary-facts">
+      <div>
+        <div class="fact-label">Timetable session</div>
+        <div class="fact-value" id="factSession">—</div>
+      </div>
+      <div>
+        <div class="fact-label">Lights on now</div>
+        <div class="fact-value" id="factOn">—</div>
+      </div>
+      <div>
+        <div class="fact-label">Last checked</div>
+        <div class="fact-value" id="factTime">—</div>
+      </div>
+      <div>
+        <div class="fact-label">Cloud connection</div>
+        <div class="fact-value" id="factApi">—</div>
+      </div>
     </div>
-    <button class="btn" id="refreshBtn">⟳ Fetch & Predict</button>
   </div>
 
-  <!-- Manual Model Check -->
-  <div class="manual-section">
-    <h3>🧪 Manual Model Check</h3>
+  <!-- Device cards -->
+  <div class="section">
+    <div class="section-title">Each light: what it is doing vs what it should do</div>
+    <div class="section-help">
+      <strong>Actual now</strong> is the live state read from the relay. <strong>Should be</strong> is what the
+      timetable model expects. When the two differ, the card names the energy-saving action.
+      OLAS only advises, it never switches anything itself.
+    </div>
+    <div class="comparison-grid" id="comparisonGrid"></div>
+  </div>
+
+  <!-- Refresh -->
+  <div class="section panel panel-head">
+    <div>
+      <div class="section-title">Run a check now</div>
+      <div class="section-help" style="margin:0;">Reads the live switch states and re-runs the model.</div>
+    </div>
+    <button class="btn" id="refreshBtn">⟳ Fetch &amp; predict</button>
+  </div>
+
+  <!-- Manual model check -->
+  <div class="section panel">
+    <div class="section-title">Try any time of the week</div>
+    <div class="section-help">Ask the model what it would expect at a chosen hour, minute and weekday.</div>
     <div class="manual-form">
       <div class="input-group">
-        <label>Hour</label>
+        <label for="predHour">Hour (0–23)</label>
         <input type="number" id="predHour" min="0" max="23" value="9">
       </div>
       <div class="input-group">
-        <label>Minute</label>
+        <label for="predMinute">Minute</label>
         <input type="number" id="predMinute" min="0" max="59" value="30">
       </div>
       <div class="input-group">
-        <label>Day</label>
+        <label for="predDay">Weekday</label>
         <select id="predDay">
-          <option value="0">Mon</option><option value="1">Tue</option><option value="2">Wed</option>
-          <option value="3">Thu</option><option value="4">Fri</option><option value="5">Sat</option><option value="6">Sun</option>
+          <option value="0">Monday</option><option value="1">Tuesday</option><option value="2">Wednesday</option>
+          <option value="3">Thursday</option><option value="4">Friday</option><option value="5">Saturday</option>
+          <option value="6">Sunday</option>
         </select>
       </div>
       <button class="btn" id="predictBtn">Predict</button>
@@ -620,9 +659,10 @@ DASHBOARD = """
     <div id="manualPredictionOutput" class="prediction-preview"></div>
   </div>
 
-  <!-- Activity Log -->
-  <div class="log-feed">
-    <h3 style="margin-bottom: 16px;">📋 Recent Activity</h3>
+  <!-- History -->
+  <div class="section panel">
+    <div class="section-title">Recent checks</div>
+    <div class="section-help">The last few scheduler runs, newest first.</div>
     <div id="logFeedContainer"></div>
   </div>
 </div>
@@ -631,113 +671,148 @@ DASHBOARD = """
   function setTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
     document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector(`[data-theme="${t}"]`).classList.add('active');
+    document.querySelector(`.theme-btn[data-theme="${t}"]`).classList.add('active');
     localStorage.setItem('olas-theme', t);
   }
   setTheme(localStorage.getItem('olas-theme') || 'light');
 
   const switches = ['Switch1','Switch2','Switch3','Switch4'];
+  const label = sw => 'Light ' + sw.replace('Switch', '');
   const initialLogs = {{ logs | tojson if logs else [] }};
+
+  function comparisonOf(entry) {
+    return switches.map(sw => entry.comparison?.[sw] || {
+      actual: false,
+      predicted: entry.predictions[sw].state,
+      match: false,
+      confidence: entry.predictions[sw].confidence
+    });
+  }
+
+  function renderSummary(logs) {
+    if (!logs.length) return;
+    const entry = logs[0];
+    const comps = comparisonOf(entry);
+    const mismatches = comps.filter(c => !c.match).length;
+    const onNow = comps.filter(c => c.actual).length;
+    const wasted = comps.filter(c => c.actual && !c.predicted).length;
+
+    document.getElementById('summaryCard').classList.toggle('has-action', mismatches > 0);
+
+    let headline, sub;
+    if (mismatches === 0) {
+      headline = 'All 4 lights match the timetable';
+      sub = 'Nothing to change right now.';
+    } else {
+      headline = `${mismatches} of 4 lights differ from the timetable`;
+      sub = wasted > 0
+        ? `${wasted} light${wasted > 1 ? 's are' : ' is'} on when the timetable says it need not be. Turning them off saves energy.`
+        : 'The model expects some lights to be on that are currently off.';
+    }
+    document.getElementById('summaryHeadline').textContent = headline;
+    document.getElementById('summarySub').textContent = sub;
+    document.getElementById('factSession').textContent = entry.session;
+    document.getElementById('factOn').textContent = `${onNow} of 4`;
+    document.getElementById('factTime').textContent = entry.timestamp;
+    document.getElementById('factApi').textContent =
+      entry.api_status === 'states_fetched' ? 'Connected' : 'Could not read states';
+  }
 
   function renderComparison(logs) {
     const grid = document.getElementById('comparisonGrid');
     if (!logs.length) {
-      grid.innerHTML = '<div style="grid-column:span 4; text-align:center; padding:40px;">No data yet</div>';
+      grid.innerHTML = '<div class="empty" style="grid-column:1/-1;">No readings yet. Run a check to get started.</div>';
       return;
     }
-    const last = logs[0];
-    let html = '';
-    switches.forEach(sw => {
-      const comp = last.comparison?.[sw] || {
-        actual: false,
-        predicted: last.predictions[sw].state,
-        match: false,
-        confidence: last.predictions[sw].confidence
-      };
-      const actual = comp.actual;
-      const predicted = comp.predicted;
-      const match = comp.match;
-      const conf = Math.round(comp.confidence * 100);
-      
-      html += `<div class="comparison-card ${match ? 'match' : 'mismatch'}">
-        <div class="device-name">${sw}</div>
-        <div class="state-row">
-          <span class="label">Actual:</span>
-          <span class="value ${actual ? 'on' : 'off'}">${actual ? 'ON' : 'OFF'}</span>
-        </div>
-        <div class="state-row">
-          <span class="label">Predicted:</span>
-          <span class="value ${predicted ? 'on' : 'off'}">${predicted ? 'ON' : 'OFF'}</span>
-        </div>
-        <div class="match-status">${match ? '✅ Match' : '⚠️ Mismatch'}</div>`;
-      
-      if (!match) {
-        html += `<div class="action-needed">Would ${predicted ? 'turn ON' : 'turn OFF'}</div>`;
-      }
-      
-      html += `<div class="confidence">${conf}% confidence</div>
-      </div>`;
-    });
-    grid.innerHTML = html;
+    const comps = comparisonOf(logs[0]);
+    grid.innerHTML = switches.map((sw, i) => {
+      const c = comps[i];
+      const conf = Math.round(c.confidence * 100);
+      const verdict = c.match
+        ? 'Correct, no action needed'
+        : (c.actual ? 'Suggest: turn this light OFF' : 'Suggest: turn this light ON');
+      return `
+        <div class="comparison-card ${c.match ? '' : 'mismatch'}">
+          <div class="device-name">${label(sw)}</div>
+          <div class="device-sub">${sw}</div>
+          <div class="state-row">
+            <span class="label">Actual now</span>
+            <span class="pill ${c.actual ? 'on' : 'off'}">${c.actual ? 'ON' : 'OFF'}</span>
+          </div>
+          <div class="state-row">
+            <span class="label">Should be</span>
+            <span class="pill ${c.predicted ? 'on' : 'off'}">${c.predicted ? 'ON' : 'OFF'}</span>
+          </div>
+          <div class="verdict">${verdict}</div>
+          <div class="confidence">Model confidence ${conf}%</div>
+        </div>`;
+    }).join('');
   }
 
   function renderLogs(logs) {
     const container = document.getElementById('logFeedContainer');
     if (!logs.length) {
-      container.innerHTML = '<div style="padding:20px; text-align:center;">No logs</div>';
+      container.innerHTML = '<div class="empty">No checks recorded yet.</div>';
       return;
     }
-    let items = '';
-    logs.slice(0,8).forEach(entry => {
-      const matches = entry.comparison ? 
-        Object.values(entry.comparison).filter(c => c.match).length : 0;
-      items += `<div class="log-item">
-        <span class="log-time">${entry.timestamp}</span>
-        <span>Match: ${matches}/4 · ${entry.session}</span>
-        <span style="margin-left: auto;">${entry.api_status}</span>
-      </div>`;
-    });
-    container.innerHTML = items;
+    const rows = logs.slice(0, 8).map(entry => {
+      const matches = comparisonOf(entry).filter(c => c.match).length;
+      const ok = matches === 4;
+      const connected = entry.api_status === 'states_fetched';
+      return `<tr>
+        <td class="time">${entry.timestamp}</td>
+        <td class="hide-sm">${entry.session}</td>
+        <td><span class="tag ${ok ? 'ok' : 'warn'}">${matches} of 4 match</span></td>
+        <td class="hide-sm"><span class="tag ${connected ? 'ok' : 'warn'}">${connected ? 'Connected' : 'Read failed'}</span></td>
+      </tr>`;
+    }).join('');
+    container.innerHTML = `<table class="log">
+      <thead><tr>
+        <th>Time</th><th class="hide-sm">Session</th><th>Result</th><th class="hide-sm">Cloud</th>
+      </tr></thead>
+      <tbody>${rows}</tbody></table>`;
   }
 
-  // Manual prediction
   document.getElementById('predictBtn').addEventListener('click', async () => {
     const h = document.getElementById('predHour').value;
     const m = document.getElementById('predMinute').value;
-    const d = document.getElementById('predDay').value;
+    const daySel = document.getElementById('predDay');
     const out = document.getElementById('manualPredictionOutput');
-    out.innerHTML = '<p>Loading...</p>';
+    out.innerHTML = '<p class="preview-caption">Predicting…</p>';
     try {
-      const r = await fetch(`/predict_time/${h}/${m}/${d}`);
+      const r = await fetch(`/predict_time/${h}/${m}/${daySel.value}`);
       const data = await r.json();
-      let html = `<div><strong>${data.query}</strong> · ${data.session}</div><div style="display:flex; gap:20px; margin-top:12px;">`;
-      switches.forEach(sw => {
+      const items = switches.map(sw => {
         const p = data.predictions[sw];
-        html += `<div class="preview-item"><span>${sw}</span><div style="font-size:1.5rem; font-weight:700;">${p.state?'ON':'OFF'}</div><small>${Math.round(p.confidence*100)}%</small></div>`;
-      });
-      html += '</div>';
-      out.innerHTML = html;
-    } catch(e) {
-      out.innerHTML = '<p style="color:red;">Failed</p>';
+        return `<div class="preview-item">
+          <div class="name">${label(sw)}</div>
+          <div class="state ${p.state ? 'on' : 'off'}">${p.state ? 'ON' : 'OFF'}</div>
+          <small>${Math.round(p.confidence * 100)}% confidence</small>
+        </div>`;
+      }).join('');
+      out.innerHTML = `<div class="preview-caption">
+          Expected states on <strong>${daySel.options[daySel.selectedIndex].text}</strong>
+          at <strong>${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}</strong> · ${data.session}
+        </div><div class="preview-grid">${items}</div>`;
+    } catch (e) {
+      out.innerHTML = '<p class="preview-caption" style="color:var(--danger);">Could not reach the model. Try again.</p>';
     }
   });
 
-  // Refresh button
   document.getElementById('refreshBtn').addEventListener('click', async () => {
     const btn = document.getElementById('refreshBtn');
     btn.disabled = true;
-    btn.textContent = 'Fetching...';
+    btn.textContent = 'Fetching…';
     try {
       await fetch('/trigger');
       setTimeout(() => location.reload(), 500);
     } catch {
-      alert('Failed');
+      btn.textContent = 'Failed, try again';
       btn.disabled = false;
-      btn.textContent = '⟳ Fetch & Predict';
     }
   });
 
-  // Initialize
+  renderSummary(initialLogs);
   renderComparison(initialLogs);
   renderLogs(initialLogs);
 </script>
@@ -777,7 +852,11 @@ def trigger():
 
 @app.route("/predict_time/<int:hour>/<int:minute>/<int:dow>")
 def predict_time(hour, minute, dow):
-    dt = datetime.datetime.now(IST).replace(hour=hour, minute=minute)
+    now = datetime.datetime.now(IST)
+    # shift to the requested weekday so day_of_week actually reaches the model
+    dt = (now + datetime.timedelta(days=(dow - now.weekday()) % 7)).replace(
+        hour=hour, minute=minute
+    )
     feats = build_features(dt)
     preds = {}
     for sw in SWITCHES:
